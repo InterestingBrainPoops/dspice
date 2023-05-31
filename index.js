@@ -45,49 +45,53 @@ class Wire {
         line(junctions[this.start].pos.x, junctions[this.start].pos.y, junctions[this.end].pos.x, junctions[this.end].pos.y);
     }
 }
-var Button = function (x, y, width, height, icallback, fill_color, text, text_color) {
-    this.pos = createVector(x, y);
-    this.dims = createVector(width, height);
-    this.callback = icallback;
-    this.fill_color = fill_color;
-    this.text_color = text_color;
-    this.text = text;
-};
 
-Button.prototype.draw = function () {
-    fill(this.fill_color);
-    stroke(0, 0, 0);
-    rect(this.pos.x, this.pos.y, this.dims.x, this.dims.y);
-    textAlign(CENTER, CENTER);
-    fill(this.text_color);
-    text(this.text, this.pos.x + this.dims.x / 2, this.pos.y + this.dims.y / 2);
-};
-
-Button.prototype.check = function () {
-    let mx = mouseX;
-    let my = mouseY;
-    let check_x = (mx >= this.pos.x) && (mx <= this.pos.x + this.dims.x);
-    let check_y = (my >= this.pos.y) && (my <= this.pos.y + this.dims.y);
-    if (check_x && check_y) {
-
-        this.callback();
+class Button {
+    constructor(x, y, width, height, icallback, fill_color, text, text_color) {
+        this.pos = createVector(x, y);
+        this.dims = createVector(width, height);
+        this.callback = icallback;
+        this.fill_color = fill_color;
+        this.text_color = text_color;
+        this.text = text;
     }
-};
 
-Button.prototype.contained = function () {
-    let mx = mouseX;
-    let my = mouseY;
-    let check_x = (mx >= this.pos.x) && (mx <= this.pos.x + this.dims.x);
-    let check_y = (my >= this.pos.y) && (my <= this.pos.y + this.dims.y);
-    return check_x && check_y;
-};
+    draw() {
+        fill(this.fill_color);
+        stroke(0, 0, 0);
+        rect(this.pos.x, this.pos.y, this.dims.x, this.dims.y);
+        textAlign(CENTER, CENTER);
+        fill(this.text_color);
+        text(this.text, this.pos.x + this.dims.x / 2, this.pos.y + this.dims.y / 2);
+    }
+    check() {
+        let mx = mouseX;
+        let my = mouseY;
+        let check_x = (mx >= this.pos.x) && (mx <= this.pos.x + this.dims.x);
+        let check_y = (my >= this.pos.y) && (my <= this.pos.y + this.dims.y);
+        if (check_x && check_y) {
+
+            this.callback();
+        }
+    }
+    contained() {
+        let mx = mouseX;
+        let my = mouseY;
+        let check_x = (mx >= this.pos.x) && (mx <= this.pos.x + this.dims.x);
+        let check_y = (my >= this.pos.y) && (my <= this.pos.y + this.dims.y);
+        return check_x && check_y;
+    }
+}
+
 function setWire() {
     // invert the wire mode
     wire_mode = !wire_mode + 0;
 }
+
 var wire_mode = 0;
 var first_point;
 var wire_button;
+
 function setup() {
 
     createCanvas(800, 800);
